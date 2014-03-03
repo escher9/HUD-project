@@ -25,7 +25,7 @@ from objloader import *
 ##################################World
 class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    objfile = 'resource/plane3.obj' 
+    objfile = 'resource/plane4.obj' 
     # objfile = 'resource/complex2.obj' 
     obj = OBJ(objfile)
     def __init__(self):
@@ -131,22 +131,22 @@ class World(pyglet.window.Window):
 
 
         # Move Right 1.5 units and into the screen 6.0 units.
-        glTranslatef(0.0, 0.0, -6.0)
+        glTranslatef(1.0, 1.0, -6.0)
         # glTranslatef(1.5, 0.0, -6.0)
         # glTranslatef(1.5, 0.0, -6.0)
         # glDepthMask(GL_FALSE)
         # glDisable(GL_DEPTH_TEST)
 
 
-        # # Draw a square (quadrilateral) rotated on the X axis.
-        # glRotatef(self.rquad, 0.0, 0.0, -1.0)		# Rotate
-        # glColor3f(0.3, 0.5, 1.0)            # Bluish shade
-        # glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
-        # glVertex3f(-1.0, 1.0, 0.0)          # Top Left
-        # glVertex3f(1.0, 1.0, 0.0)           # Top Right
-        # glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
-        # glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
-        # glEnd()                             # We are done with the polygon
+        # Draw a square (quadrilateral) rotated on the X axis.
+        glRotatef(self.rquad, 0.0, 1.0, 0.0)		# Rotate
+        glColor3f(0.3, 0.5, 1.0)            # Bluish shade
+        glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
+        glVertex3f(-1.0, 1.0, 0.0)          # Top Left
+        glVertex3f(1.0, 1.0, 0.0)           # Top Right
+        glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
+        glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
+        glEnd()                             # We are done with the polygon
 
         # What values to use?  Well, if you have a FAST machine and a FAST 3D Card, then
         # large values make an unpleasant display with flickering and tearing.  I found that
