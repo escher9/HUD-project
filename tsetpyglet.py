@@ -21,13 +21,16 @@ from pyglet.gl import *
 from pyglet.window import key
 from OpenGL.GLUT import * #<<<==Needed for GLUT calls
 from objloader import *
+from numpy import sin
 
 ##################################World
 class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    objfile = 'resource/plane4.obj' 
+    objfile1 = 'resource/predator.obj' 
+    objfile2 = 'resource/A10.obj' 
     # objfile = 'resource/complex2.obj' 
-    obj = OBJ(objfile)
+    obj = OBJ(objfile1)
+    obj2 = OBJ(objfile2)
     def __init__(self):
         config = Config(sample_buffers=1, samples=4,
                     depth_size=16, double_buffer=True,)
@@ -60,15 +63,15 @@ class World(pyglet.window.Window):
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # A general OpenGL initialization function.  Sets all of the initial parameters.
-    def InitGL(self,Width, Height):				# We call this right after our OpenGL window is created.
-        glClearColor(0.0, 1.0, 1.0, 1.0)	   # This Will Clear The Background Color To Black
-        glClearDepth(1.0)					      # Enables Clearing Of The Depth Buffer
-        glDepthFunc(GL_LESS)				      # The Type Of Depth Test To Do
-        glEnable(GL_DEPTH_TEST)			    	# Enables Depth Testing
-        glShadeModel(GL_SMOOTH)			   	# Enables Smooth Color Shading
+    def InitGL(self,Width, Height):      # We call this right after our OpenGL window is created.
+        glClearColor(0.0, 1.0, 0.5, 1.0) # This Will Clear The Background Color To Black
+        glClearDepth(1.0)                # Enables Clearing Of The Depth Buffer
+        glDepthFunc(GL_LESS)             # The Type Of Depth Test To Do
+        glEnable(GL_DEPTH_TEST)          # Enables Depth Testing
+        glShadeModel(GL_SMOOTH)          # Enables Smooth Color Shading
         glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()					      # Reset The Projection Matrix
-   	 									            # Calculate The Aspect Ratio Of The Window
+        glLoadIdentity()                 # Reset The Projection Matrix
+                                         # Calculate The Aspect Ratio Of The Window
         #(pyglet initializes the screen so we ignore this call)
         #gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
         glMatrixMode(GL_MODELVIEW)
@@ -86,6 +89,7 @@ class World(pyglet.window.Window):
         glEnable(GL_COLOR_MATERIAL)
         glEnable(GL_DEPTH_TEST)
         glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
+        # glutFullScreenToggle()
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
@@ -105,31 +109,22 @@ class World(pyglet.window.Window):
 
         # Clear The Screen And The Depth Buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
         glLoadIdentity()					# Reset The View
-
-        # Move Left 1.5 units and into the screen 6.0 units.
-        glTranslatef(0.0, 0.0, -16.0)
-
-        # We have smooth color mode on, this will blend across the vertices.
-        # Draw a triangle rotated on the Y axis.
-        glRotatef(self.rquad, 0.0, 1.0, 1.0)      # Rotate
-
-        # glBegin(GL_POLYGON)                 # Start drawing a polygon
-        # glColor3f(1.0, 0.0, 0.0)            # Red
-        # glVertex3f(0.0, 1.0, 0.0)           # Top
-        # glColor3f(0.0, 1.0, 0.0)            # Green
-        # glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
-        # glColor3f(0.0, 0.0, 1.0)            # Blue
-        # glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
-        # glEnd()                             # We are done with the polygon
+        glTranslatef(15.0, 2*sin(self.rquad/50.)-15, -50.0)
+        glRotatef(self.rquad, 0.1, 1.0, 0.0)      # Rotate
         glCallList(self.obj.gl_list)
 
         # We are "undoing" the rotation so that we may rotate the quad on its own axis.
         # We also "undo" the prior translate.  
         # This could also have been done using the matrix stack.
         glLoadIdentity()
+        glTranslatef(-15.0, 0.0, -50.0)
+        glRotatef(self.rquad, 0.1, -1.0, 0.0)      # Rotate
+        glCallList(self.obj2.gl_list)
 
 
+        glLoadIdentity()
         # Move Right 1.5 units and into the screen 6.0 units.
         glTranslatef(1.0, 1.0, -6.0)
         # glTranslatef(1.5, 0.0, -6.0)
@@ -154,7 +149,7 @@ class World(pyglet.window.Window):
         #(2009.. 9 years after this code was written, this still applies.. unless you use)
         #(a timed display, as done here with pyglet.clock.schedule_interval(self.update, 1/60.0) #updates at 60Hz)
         # self.rtri  = self.rtri + 1.0                  # Increase The Rotation Variable For The Triangle
-        self.rquad = self.rquad + 1.0                 # Decrease The Rotation Variable For The Quad
+        self.rquad = self.rquad + 1.3                 # Decrease The Rotation Variable For The Quad
 
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,9 +161,13 @@ class World(pyglet.window.Window):
         #glutSwapBuffers()
 
 ##################################main
+default_size = 1024,768 
+screen_size1 = 640,480 
 if __name__ == "__main__":
     window = World()
-    # glutFullScreen()
+    window.set_location(10,30)
+    window.set_size(*screen_size1)
+    # window.set_fullscreen(True)
     pyglet.app.run()
 
 
