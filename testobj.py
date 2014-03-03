@@ -28,7 +28,8 @@ glEnable(GL_COLOR_MATERIAL)
 glEnable(GL_DEPTH_TEST)
 glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
  
-objfile = 'resource/complex2.obj' 
+objfile = 'resource/plane.obj' 
+# objfile = 'resource/complex2.obj' 
 obj = OBJ(objfile)
 # obj = OBJ(sys.argv[1], swapyz=True)
  
@@ -37,7 +38,7 @@ clock = pygame.time.Clock()
 glMatrixMode(GL_PROJECTION)
 glLoadIdentity()
 width, height = viewport
-gluPerspective(90.0, width/float(height), 1, 100.0)
+gluPerspective(45.0, width/float(height), 1, 100.0)
 glEnable(GL_DEPTH_TEST)
 glMatrixMode(GL_MODELVIEW)
  

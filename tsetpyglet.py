@@ -25,7 +25,8 @@ from objloader import *
 ##################################World
 class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    objfile = 'resource/complex2.obj' 
+    objfile = 'resource/plane.obj' 
+    # objfile = 'resource/complex2.obj' 
     obj = OBJ(objfile)
     def __init__(self):
         config = Config(sample_buffers=1, samples=4,
@@ -52,7 +53,6 @@ class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def on_draw(self):
         self.DrawGLScene()
-        glCallList(self.obj.gl_list)
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def on_resize(self,w,h):
@@ -98,15 +98,17 @@ class World(pyglet.window.Window):
 
         # We have smooth color mode on, this will blend across the vertices.
         # Draw a triangle rotated on the Y axis.
-        # glRotatef(self.rtri, 0.0, 0.0, -1.0)      # Rotate
-        glBegin(GL_POLYGON)                 # Start drawing a polygon
-        glColor3f(1.0, 0.0, 0.0)            # Red
-        glVertex3f(0.0, 1.0, 0.0)           # Top
-        glColor3f(0.0, 1.0, 0.0)            # Green
-        glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
-        glColor3f(0.0, 0.0, 1.0)            # Blue
-        glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
-        glEnd()                             # We are done with the polygon
+        glRotatef(self.rquad, 1.0, 0.0, -1.0)      # Rotate
+
+        # glBegin(GL_POLYGON)                 # Start drawing a polygon
+        # glColor3f(1.0, 0.0, 0.0)            # Red
+        # glVertex3f(0.0, 1.0, 0.0)           # Top
+        # glColor3f(0.0, 1.0, 0.0)            # Green
+        # glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
+        # glColor3f(0.0, 0.0, 1.0)            # Blue
+        # glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
+        # glEnd()                             # We are done with the polygon
+        glCallList(self.obj.gl_list)
 
         # We are "undoing" the rotation so that we may rotate the quad on its own axis.
         # We also "undo" the prior translate.  
