@@ -64,7 +64,7 @@ class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # A general OpenGL initialization function.  Sets all of the initial parameters.
     def InitGL(self,Width, Height):      # We call this right after our OpenGL window is created.
-        glClearColor(0.0, 1.0, 0.5, 1.0) # This Will Clear The Background Color To Black
+        glClearColor(0.0, 0.0, 0.5, 1.0) # This Will Clear The background Color To Black
         glClearDepth(1.0)                # Enables Clearing Of The Depth Buffer
         glDepthFunc(GL_LESS)             # The Type Of Depth Test To Do
         glEnable(GL_DEPTH_TEST)          # Enables Depth Testing
@@ -111,10 +111,12 @@ class World(pyglet.window.Window):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         glLoadIdentity()					# Reset The View
-        glTranslatef(15.0, 2*sin(self.rquad/50.)-15, -50.0)
-        glRotatef(self.rquad, 0.1, 1.0, 0.0)      # Rotate
+        glTranslatef(15.0, -5, -50.0)
+        # glTranslatef(15.0, 2*sin(self.rquad/50.)-5, -50.0)
+        glRotatef(20*sin(self.rquad/20.), 0.1, 0.1, -1.0)      # Rotate
         glCallList(self.obj.gl_list)
 
+# ---------------------------------------------------------------------------------
         # We are "undoing" the rotation so that we may rotate the quad on its own axis.
         # We also "undo" the prior translate.  
         # This could also have been done using the matrix stack.
@@ -124,24 +126,19 @@ class World(pyglet.window.Window):
         glCallList(self.obj2.gl_list)
 
 
-        glLoadIdentity()
-        # Move Right 1.5 units and into the screen 6.0 units.
-        glTranslatef(1.0, 1.0, -6.0)
-        # glTranslatef(1.5, 0.0, -6.0)
-        # glTranslatef(1.5, 0.0, -6.0)
-        # glDepthMask(GL_FALSE)
-        # glDisable(GL_DEPTH_TEST)
-
-
-        # Draw a square (quadrilateral) rotated on the X axis.
-        glRotatef(self.rquad, 0.0, 1.0, 0.0)		# Rotate
-        glColor3f(0.3, 0.5, 1.0)            # Bluish shade
-        glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
-        glVertex3f(-1.0, 1.0, 0.0)          # Top Left
-        glVertex3f(1.0, 1.0, 0.0)           # Top Right
-        glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
-        glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
-        glEnd()                             # We are done with the polygon
+        # glLoadIdentity()
+        # # Move Right 1.5 units and into the screen 6.0 units.
+        # glTranslatef(1.0, 1.0, -6.0)
+# 
+        # # Draw a square (quadrilateral) rotated on the X axis.
+        # glRotatef(self.rquad, 0.0, 1.0, 0.0)		# Rotate
+        # glColor3f(0.3, 0.5, 1.0)            # Bluish shade
+        # glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
+        # glVertex3f(-1.0, 1.0, 0.0)          # Top Left
+        # glVertex3f(1.0, 1.0, 0.0)           # Top Right
+        # glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
+        # glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
+        # glEnd()                             # We are done with the polygon
 
         # What values to use?  Well, if you have a FAST machine and a FAST 3D Card, then
         # large values make an unpleasant display with flickering and tearing.  I found that
