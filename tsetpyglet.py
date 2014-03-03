@@ -64,7 +64,8 @@ class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # A general OpenGL initialization function.  Sets all of the initial parameters.
     def InitGL(self,Width, Height):      # We call this right after our OpenGL window is created.
-        glClearColor(0.0, 0.0, 0.5, 1.0) # This Will Clear The background Color To Black
+        glClearColor(0.0, 0.0, 0.0, 0.0) # This Will Clear The background Color To Black
+        # glClearColor(0.0, 0.0, 0.5, 1.0) # This Will Clear The background Color To Black
         glClearDepth(1.0)                # Enables Clearing Of The Depth Buffer
         glDepthFunc(GL_LESS)             # The Type Of Depth Test To Do
         glEnable(GL_DEPTH_TEST)          # Enables Depth Testing
@@ -82,25 +83,54 @@ class World(pyglet.window.Window):
         glMaterialfv(GL_FRONT, GL_SHININESS, 10.0);
         glLightfv(GL_LIGHT0, GL_POSITION,  (0, 200, 100, 0.0))
 
-        # glLightfv(GL_LIGHT0, GL_AMBIENT, (1.0, 0.2, 0.2, 1.0))
-        # glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.3, 0.3, 0.9, 1.0))
+        dens = 0.3 
+        glLightfv(GL_LIGHT0, GL_AMBIENT, (dens,dens,dens, 0.0))
+        # glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 0.0))
+
         glEnable(GL_LIGHT0)
         glEnable(GL_LIGHTING)
         glEnable(GL_COLOR_MATERIAL)
-        glEnable(GL_DEPTH_TEST)
-        glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
-        # glutFullScreenToggle()
+        # # glutFullScreenToggle()
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
     def ReSizeGLScene(self,Width, Height):
-        if Height == 0:						      # Prevent A Divide By Zero If The Window Is Too Small
-     	      Height = 1
-        glViewport(0, 0, Width, Height)		# Reset The Current Viewport And Perspective Transformation
+        if Height == 0:                           # Prevent A Divide By Zero If The Window Is Too Small
+              Height = 1
+        glViewport(0, 0, Width, Height)     # Reset The Current Viewport And Perspective Transformation
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
         gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
         glMatrixMode(GL_MODELVIEW)
+
+    def DrawHUD(self,basicT=(0,0,0)):
+        # glLoadIdentity()
+        # glTranslatef(0, 0, -30.0)
+        pyglet.gl.glColor4f(0.0,1,0,1.0)                                               
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)                             
+        glEnable (GL_BLEND)                                                            
+        glEnable (GL_LINE_SMOOTH);                                                     
+        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE)                                     
+        glLineWidth (3)                                                                
+        pyglet.graphics.draw ( 2, pyglet.gl.GL_LINES, ('v2i',(10, 15, 300, 305))    )
+
+        # glClear(GL_COLOR_BUFFER_BIT)
+        glLoadIdentity()
+        glTranslatef(1.0, 1.0, -6.0)
+
+        # Draw a square (quadrilateral) rotated on the X axis.
+        glRotatef(self.rquad, 0.0, 1.0, 0.0)        # Rotate
+        glColor3f(1.0, 1.0, 1.0)            # Bluish shade
+        glPointSize(3.0)
+
+
+
+        glBegin(GL_LINES)                   # Start drawing a 4 sided polygon
+        glVertex3f(-1.0, 1.0, 0.0)          # Top Left
+        glVertex3f(1.0, 1.0, 0.0)           # Top Right
+        glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
+        glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
+        glEnd()                             # We are done with the polygon
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # The main drawing function.
@@ -110,7 +140,11 @@ class World(pyglet.window.Window):
         # Clear The Screen And The Depth Buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        glLoadIdentity()					# Reset The View
+        basicT = (1,1,1)
+
+        self.DrawHUD(basicT)
+
+        glLoadIdentity()                    # Reset The View
         glTranslatef(15.0, -5, -50.0)
         # glTranslatef(15.0, 2*sin(self.rquad/50.)-5, -50.0)
         glRotatef(20*sin(self.rquad/20.), 0.1, 0.1, -1.0)      # Rotate
@@ -125,13 +159,12 @@ class World(pyglet.window.Window):
         glRotatef(self.rquad, 0.1, -1.0, 0.0)      # Rotate
         glCallList(self.obj2.gl_list)
 
-
         # glLoadIdentity()
         # # Move Right 1.5 units and into the screen 6.0 units.
         # glTranslatef(1.0, 1.0, -6.0)
 # 
         # # Draw a square (quadrilateral) rotated on the X axis.
-        # glRotatef(self.rquad, 0.0, 1.0, 0.0)		# Rotate
+        # glRotatef(self.rquad, 0.0, 1.0, 0.0)      # Rotate
         # glColor3f(0.3, 0.5, 1.0)            # Bluish shade
         # glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
         # glVertex3f(-1.0, 1.0, 0.0)          # Top Left
@@ -157,7 +190,6 @@ class World(pyglet.window.Window):
         #(pyglet provides the swap, so we dont use the swap here)
         #glutSwapBuffers()
 
-##################################main
 default_size = 1024,768 
 screen_size1 = 640,480 
 if __name__ == "__main__":
