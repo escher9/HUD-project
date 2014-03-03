@@ -1,0 +1,91 @@
+[Accelerator]
+Count=74
+0 0 0 I selectImageIglooTool:
+0 0 0 O selectOrbitTool:
+0 0 0 Z selectZoomTool:
+0 0 1 Z viewZoomExtents:
+0 0 0 A selectArcTool:
+0 0 0 C selectCircleTool:
+0 0 0 E selectEraseTool:
+0 0 0 B selectPaintTool:
+0 0 0 P selectPushPullTool:
+0 0 0 R selectRectangleTool:
+0 0 0 Space selectSelectionTool:
+0 0 0 L selectLineTool:
+0 0 0 K View/Edge Style/Back Edges
+0 0 0 M selectMoveTool:
+0 0 0 T selectMeasureTool:
+0 0 0 S selectScaleTool:
+1 1 0 W pageUpdate:
+0 0 0 F1 pagePrevious:
+0 1 0 ` pageAdd:
+1 1 0 D pageDelete:
+1 0 0 E viewUndo:
+0 1 0 2 viewTop:
+0 1 0 Q viewLeft:
+0 1 0 E viewRight:
+0 1 0 W viewBottom:
+0 1 0 3 viewBack:
+0 0 0 X editDelete:
+0 0 0 F selectDollyTool:
+0 0 0 D selectLineTool:
+1 0 0 G editHide:
+0 0 0 H Edit/Unhide/Last
+1 1 0 S Edit/Make Component...
+1 0 0 F selectOrbitTool:
+0 0 1 F selectOffsetTool:
+1 0 0 D selectPushPullTool:
+0 1 0 1 viewFront:
+0 0 0 W Plugins/Weld
+0 0 1 A Draw/BezierSpline curves/Classic Bezier curve
+1 0 1 G View/Component Edit/Hide Rest Of Model
+0 0 0 Q selectOrbitTool:
+0 0 0 G selectRotateTool:
+0 1 0 S selectSectionPlaneTool:
+0 0 1 T selectDimensionTool:
+1 0 1 F Tools/Make Faces
+0 0 0 ' Tools/Make Faces 1.4
+0 0 1 G Edit/Make Group
+0 0 0 F5 pageDelete:
+0 0 0 F4 pageUpdate:
+0 0 0 F3 pageNext:
+0 0 0 F2 pagePrevious:
+0 0 0 ` Tools/TIG::originate components axes
+0 1 0 A Tools/Angular dimension
+0 0 1 E Edit/Item/Explode
+0 0 1 X Plugins/Khamsin/Khamsin Tool
+0 0 1 W selectWalkTool:
+0 0 1 / Plugins/Mirror Selection
+0 1 0 X selectAxisTool:
+0 1 1 X View/Reset axis (World)
+0 0 1 ` Edit/Item/Align Axes
+1 0 0 ` Edit/Item/Align View
+0 0 1 L Tools/Fredo6 Collection/Curviloft/Loft by Spline
+0 0 1 S Tools/Solid Inspector
+1 0 0 2 Plugins/Export STL file
+1 0 0 3 Plugins/Import STL file
+0 1 0 D Tools/Angular Dimension
+0 0 1 H Edit/Unhide/All
+0 0 1 J editUnhide:
+0 0 1 . Window/Hide Dialogs
+0 0 0 J Edit/Unhide/All
+0 0 0 F8 Edit/Item/Rotate 90/Around Blue
+0 0 0 F7 Edit/Item/Rotate 90/Around Green
+0 0 0 F6 Edit/Item/Rotate 90/Around Red
+1 0 0 R Edit/Item/Reverse Faces
+0 0 1 M Window/Materials
+[File Locations]
+Models=C:\Users\Administrator\Documents\sketchup-workspace\
+Components=C:\Users\Administrator\Documents\sketchup-workspace\
+Materials=C:\Users\Administrator\Documents\sketchup-workspace\
+Styles=C:\Users\Administrator\Documents\sketchup-workspace\
+Textures=C:\Users\Administrator\Documents\sketchup-workspace\
+Images=C:\Users\Administrator\Documents\sketchup-workspace\
+ImportExport=C:\Users\Administrator\Documents\sketchup-workspace\
+ComponentBrowser=C:\Program Files (x86)\SketchUp\SketchUp 2013\Components\
+ComponentBrowser1=C:\Program Files (x86)\SketchUp\SketchUp 2013\Components\
+ComponentBrowser2=C:\Program Files (x86)\SketchUp\SketchUp 2013\Components\
+MaterialsBrowser=C:\Program Files (x86)\Google\Google SketchUp 8\Materials\Colors\
+MaterialsBrowser2=C:\Program Files (x86)\SketchUp\SketchUp 2013\Materials\
+StylesBrowser=C:\Program Files (x86)\SketchUp\SketchUp 2013\Styles\Style Builder Competition Winners\
+StylesBrowser2=C:\Program Files (x86)\SketchUp\SketchUp 2013\Styles\

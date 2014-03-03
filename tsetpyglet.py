@@ -25,7 +25,7 @@ from objloader import *
 ##################################World
 class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    objfile = 'resource/plane.obj' 
+    objfile = 'resource/plane3.obj' 
     # objfile = 'resource/complex2.obj' 
     obj = OBJ(objfile)
     def __init__(self):
@@ -39,10 +39,10 @@ class World(pyglet.window.Window):
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def setup(self):
-        self.width = 640
+        self.width  = 640
         self.height = 480
-        self.rtri = 0.0    #(was global)
-        self.rquad = 0.0   #(was global)
+        self.rtri   = 0.0 # (was global)
+        self.rquad  = 0.0 # (was global)
         self.InitGL(self.width, self.height)
         pyglet.clock.schedule_interval(self.update, 1/60.0) # update at 60Hz
 
@@ -61,7 +61,7 @@ class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # A general OpenGL initialization function.  Sets all of the initial parameters.
     def InitGL(self,Width, Height):				# We call this right after our OpenGL window is created.
-        glClearColor(0.0, 0.0, 0.0, 0.0)	   # This Will Clear The Background Color To Black
+        glClearColor(0.0, 1.0, 1.0, 1.0)	   # This Will Clear The Background Color To Black
         glClearDepth(1.0)					      # Enables Clearing Of The Depth Buffer
         glDepthFunc(GL_LESS)				      # The Type Of Depth Test To Do
         glEnable(GL_DEPTH_TEST)			    	# Enables Depth Testing
@@ -72,6 +72,20 @@ class World(pyglet.window.Window):
         #(pyglet initializes the screen so we ignore this call)
         #gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
         glMatrixMode(GL_MODELVIEW)
+
+        # for realisitic light diffusion effect
+        specLight0 = [0.5, 0.5, 0.5, 1.0];
+        glLightfv(GL_LIGHT0, GL_SPECULAR, specLight0);
+        glMaterialfv(GL_FRONT, GL_SHININESS, 10.0);
+        glLightfv(GL_LIGHT0, GL_POSITION,  (0, 200, 100, 0.0))
+
+        # glLightfv(GL_LIGHT0, GL_AMBIENT, (1.0, 0.2, 0.2, 1.0))
+        # glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.3, 0.3, 0.9, 1.0))
+        glEnable(GL_LIGHT0)
+        glEnable(GL_LIGHTING)
+        glEnable(GL_COLOR_MATERIAL)
+        glEnable(GL_DEPTH_TEST)
+        glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
@@ -94,11 +108,11 @@ class World(pyglet.window.Window):
         glLoadIdentity()					# Reset The View
 
         # Move Left 1.5 units and into the screen 6.0 units.
-        glTranslatef(-1.5, 0.0, -6.0)
+        glTranslatef(0.0, 0.0, -16.0)
 
         # We have smooth color mode on, this will blend across the vertices.
         # Draw a triangle rotated on the Y axis.
-        glRotatef(self.rquad, 1.0, 0.0, -1.0)      # Rotate
+        glRotatef(self.rquad, 0.0, 1.0, 1.0)      # Rotate
 
         # glBegin(GL_POLYGON)                 # Start drawing a polygon
         # glColor3f(1.0, 0.0, 0.0)            # Red
@@ -115,18 +129,24 @@ class World(pyglet.window.Window):
         # This could also have been done using the matrix stack.
         glLoadIdentity()
 
-        # Move Right 1.5 units and into the screen 6.0 units.
-        glTranslatef(1.5, 0.0, -6.0)
 
-        # Draw a square (quadrilateral) rotated on the X axis.
-        glRotatef(self.rquad, 0.0, 0.0, -1.0)		# Rotate
-        glColor3f(0.3, 0.5, 1.0)            # Bluish shade
-        glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
-        glVertex3f(-1.0, 1.0, 0.0)          # Top Left
-        glVertex3f(1.0, 1.0, 0.0)           # Top Right
-        glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
-        glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
-        glEnd()                             # We are done with the polygon
+        # Move Right 1.5 units and into the screen 6.0 units.
+        glTranslatef(0.0, 0.0, -6.0)
+        # glTranslatef(1.5, 0.0, -6.0)
+        # glTranslatef(1.5, 0.0, -6.0)
+        # glDepthMask(GL_FALSE)
+        # glDisable(GL_DEPTH_TEST)
+
+
+        # # Draw a square (quadrilateral) rotated on the X axis.
+        # glRotatef(self.rquad, 0.0, 0.0, -1.0)		# Rotate
+        # glColor3f(0.3, 0.5, 1.0)            # Bluish shade
+        # glBegin(GL_QUADS)                   # Start drawing a 4 sided polygon
+        # glVertex3f(-1.0, 1.0, 0.0)          # Top Left
+        # glVertex3f(1.0, 1.0, 0.0)           # Top Right
+        # glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
+        # glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
+        # glEnd()                             # We are done with the polygon
 
         # What values to use?  Well, if you have a FAST machine and a FAST 3D Card, then
         # large values make an unpleasant display with flickering and tearing.  I found that
