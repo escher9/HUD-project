@@ -29,7 +29,7 @@ class World(pyglet.window.Window):
     objfile1 = 'resource/predator.obj' 
     objfile2 = 'resource/A10.obj' 
     # objfile = 'resource/complex2.obj' 
-    obj = OBJ(objfile1)
+    # obj = OBJ(objfile1)
     # obj2 = OBJ(objfile2)
     def __init__(self):
         config = Config(sample_buffers=1, samples=4,
@@ -152,11 +152,11 @@ class World(pyglet.window.Window):
 
         self.DrawHUD(basicT)
 
-        glLoadIdentity()                    # Reset The View
-        glTranslatef(15.0, -5, -50.0)
-        # glTranslatef(15.0, 2*sin(self.rquad/50.)-5, -50.0)
-        glRotatef(20*sin(self.rquad/20.), 0.1, 0.1, -1.0)      # Rotate
-        glCallList(self.obj.gl_list)
+        # glLoadIdentity()                    # Reset The View
+        # glTranslatef(15.0, -5, -50.0)
+        # # glTranslatef(15.0, 2*sin(self.rquad/50.)-5, -50.0)
+        # glRotatef(20*sin(self.rquad/20.), 0.1, 0.1, -1.0)      # Rotate
+        # glCallList(self.obj.gl_list)
 
 # ---------------------------------------------------------------------------------
         # We are "undoing" the rotation so that we may rotate the quad on its own axis.
