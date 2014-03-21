@@ -39,6 +39,7 @@ class World(pyglet.window.Window):
         except:
             super(World, self).__init__(resizable=True)
         self.setup()
+        self.fps = pyglet.clock.ClockDisplay() 
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def setup(self):
@@ -56,6 +57,7 @@ class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def on_draw(self):
         self.DrawGLScene()
+        self.fps.draw()
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def on_resize(self,w,h):

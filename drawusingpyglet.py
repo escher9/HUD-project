@@ -23,6 +23,8 @@ from OpenGL.GLUT import * #<<<==Needed for GLUT calls
 from objloader import *
 from numpy import sin
 
+default_size = 1024,768 
+screen_size1 = 640,480 
 ##################################World
 class World(pyglet.window.Window):
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,6 +68,7 @@ class World(pyglet.window.Window):
         glDisable(GL_DEPTH_TEST)
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)                             
         glEnable (GL_BLEND)                                                            
+
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # A general OpenGL initialization function.  Sets all of the initial parameters.
     def InitGL(self,Width, Height):      # We call this right after our OpenGL window is created.
@@ -74,7 +77,7 @@ class World(pyglet.window.Window):
         glClearDepth(1.0)                # Enables Clearing Of The Depth Buffer
         glDepthFunc(GL_LESS)             # The Type Of Depth Test To Do
         glEnable(GL_DEPTH_TEST)          # Enables Depth Testing
-        glShadeModel(GL_SMOOTH)          # Enables Smooth Color Shading
+        # glShadeModel(GL_SMOOTH)          # Enables Smooth Color Shading
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()                 # Reset The Projection Matrix
                                          # Calculate The Aspect Ratio Of The Window
@@ -84,17 +87,14 @@ class World(pyglet.window.Window):
 
         # for realisitic light diffusion effect
         specLight0 = [0.5, 0.5, 0.5, 1.0];
-        glLightfv(GL_LIGHT0, GL_SPECULAR, specLight0);
-        glMaterialfv(GL_FRONT, GL_SHININESS, 10.0);
-        glLightfv(GL_LIGHT0, GL_POSITION,  (0, 200, 100, 0.0))
-
+        # glLightfv(GL_LIGHT0, GL_SPECULAR, specLight0);
+        # glMaterialfv(GL_FRONT, GL_SHININESS, 10.0);
+        # glLightfv(GL_LIGHT0, GL_POSITION,  (0, 200, 100, 0.0))
+# 
         dens = 0.3 
-        glLightfv(GL_LIGHT0, GL_AMBIENT, (dens,dens,dens, 0.0))
-        # glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 0.0))
+        # glLightfv(GL_LIGHT0, GL_AMBIENT, (dens,dens,dens, 0.0))
+        # # glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 0.0))
 
-        glEnable(GL_LIGHT0)
-        glEnable(GL_LIGHTING)
-        glEnable(GL_COLOR_MATERIAL)
         # # glutFullScreenToggle()
 
         # self.MakeTransparent()
@@ -110,24 +110,53 @@ class World(pyglet.window.Window):
         glMatrixMode(GL_MODELVIEW)
 
     def DrawHUD(self,basicT=(0,0,0)):
-        # glMatrixMode(GL_PROJECTION)
-        # glLoadIdentity()
+        glClearDepth(1.0)                # Enables Clearing Of The Depth Buffer
+        glClearColor(0.0, 0.0, 0.0, 0.0) # This Will Clear The background Color To Black
+        self.ShadingLight('disable')
+        glDisable(GL_DEPTH_TEST)
+            
+        glLoadIdentity()
+        x,y = screen_size1 
+        glOrtho ( 0, x, y, 0, 0, 1 )
+
         # glOrtho ( 0, 640, 480, 0, 0, 1 )
 
-        glMatrixMode(GL_MODELVIEW)
+        # glMatrixMode(GL_MODELVIEW)
         # glTranslatef(0, 0, -30.0)
-        pyglet.gl.glColor4f(0.0,1,0,1.0)                                               
-        glEnable (GL_LINE_SMOOTH);                                                     
-        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE)                                     
+        pyglet.gl.glColor4f(1.0,1,0,1.0)                                               
+        # glEnable (GL_LINE_SMOOTH);                                                     
+        # glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE)                                     
         glLineWidth (3)                                                                
         pyglet.graphics.draw ( 2, pyglet.gl.GL_LINES, ('v2i',(10, 15, 300, 305))    )
 
-        # glClear(GL_COLOR_BUFFER_BIT)
+
+    def ShadingLight(self,opt):
+        if opt == 'enable': 
+            glEnable(GL_LIGHT0)
+            glEnable(GL_LIGHTING)
+            glEnable(GL_COLOR_MATERIAL)
+        elif opt == 'disable':
+            glDisable(GL_LIGHT0)
+            glDisable(GL_LIGHTING)
+            glDisable(GL_COLOR_MATERIAL)
+
+
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # The main drawing function.
+    def DrawGLScene(self):
+        global rtri, rquad
+
+        self.ShadingLight('enable')
+
+        # Clear The Screen And The Depth Buffer
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        # glClear(GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         glTranslatef(1.0, 1.0, -6.0)
 
         # Draw a square (quadrilateral) rotated on the X axis.
-        glRotatef(self.rquad, 0.0, 1.0, 0.0)        # Rotate
+        glRotatef(self.rquad, 1.0, 1.0, 1.0)        # Rotate
         glColor3f(1.0, 1.0, 1.0)            # Bluish shade
         glPointSize(3.0)
 
@@ -139,14 +168,6 @@ class World(pyglet.window.Window):
         glVertex3f(1.0, -1.0, 0.0)          # Bottom Right
         glVertex3f(-1.0, -1.0, 0.0)         # Bottom Left
         glEnd()                             # We are done with the polygon
-
-    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # The main drawing function.
-    def DrawGLScene(self):
-        global rtri, rquad
-
-        # Clear The Screen And The Depth Buffer
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         basicT = (1,1,1)
 
@@ -199,8 +220,6 @@ class World(pyglet.window.Window):
         #(pyglet provides the swap, so we dont use the swap here)
         #glutSwapBuffers()
 
-default_size = 1024,768 
-screen_size1 = 640,480 
 if __name__ == "__main__":
     window = World()
     window.set_location(10,30)
